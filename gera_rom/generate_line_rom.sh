@@ -107,7 +107,7 @@ addi*)
 
 slti*)
 	ADDRESS=${vetor[4]}
-	BOP="001000" # ALTERAR AQUI O OPCODE
+	BOP="001010" # ALTERAR AQUI O OPCODE
 	RT=$(echo "${vetor[1]}"| sed -e "s/\$\([0-9]*\)/\1/g")
 	RS=$(echo "${vetor[2]}"| sed -e "s/\$\([0-9]*\)/\1/g")
  	IMM=$(echo "${vetor[3]}"| sed -e "s/\(^-*[0-9]*\)(.*/\1/g")
