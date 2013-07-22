@@ -7,7 +7,7 @@ entity forward is
 	generic( 
 		size: integer := 32
 	);
-	
+
 	port (
 		EX_rs, EX_rd, EX_rt, ID_rs, ID_rt, MEM_rd: in reg32;
 		EX_RegWrite, MEM_RegWrite: in std_logic;

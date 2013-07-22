@@ -10,9 +10,7 @@ VCD = --vcd=mips.vcd
 
 STOP = --stop-time=100000ns
 
-SRC =	forward.vhd \
-	predicao.vhd \
- 	basic_types.vhd \
+SRC = 	basic_types.vhd \
     	reg.vhd \
     	add32.vhd \
     	mux2.vhd \
@@ -27,11 +25,11 @@ SRC =	forward.vhd \
     	alu_ctl.vhd \
     	mem32.vhd \
     	mips_pipeline.vhd \
-    	mips_tb.vhd
+    	mips_tb.vhd \
+	forward.vhd \
+	predicao.vhd
 
-OBJ =	forward.o \
-	predicao.o \
-	basic_types.o \
+OBJ = 	basic_types.o \
     	reg.o \
     	add32.o \
     	mux3.o \
@@ -46,7 +44,9 @@ OBJ =	forward.o \
     	alu_ctl.o \
     	mem32.o \
     	mips_pipeline.o \
-    	mips_tb.o
+    	mips_tb.o \
+	forward.o \
+	predicao.o
 
 $(OBJ): $(SRC)
 	$(COMP) $(SRC)

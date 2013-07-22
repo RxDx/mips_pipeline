@@ -182,7 +182,7 @@ begin -- BEGIN MIPS_PIPELINE ARCHITECTURE
 
     ALU_c: entity work.alu_ctl port map (EX_ALUOp, EX_funct, EX_Operation);
 
-    FORWARD_UNIT: entity work.forward port map (EX_RegWrite, EX_rs, EX_rd EX_rt, ID_rs, ID_rt, MEM_RegWrite, MEM_rd, ForwardA, ForwardB); -- Adicionado UNIDADE de ADIANTAMENTO (forward.vhd)
+    FORWARD_UNIT: entity work.forward port map (EX_RegWrite, EX_rs, EX_rd, EX_rt, ID_rs, ID_rt, MEM_rd, EX_RegWrite, MEM_RegWrite, ForwardA, ForwardB); -- Adicionado UNIDADE de ADIANTAMENTO (forward.vhd)
 
     EX_MEM_pip: process (clk)		    -- EX/MEM Pipeline Register
     begin
