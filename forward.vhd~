@@ -24,16 +24,16 @@ begin
 	process(EX_rs, EX_rd, EX_rt, ID_rs, ID_rt, MEM_rd, EX_RegWrite, MEM_RegWrite)
 	begin
 		-- EX hazards
-		if (EX_RegWrite != 0 and (EX_rd <> 0) and (EX_rd == ID_rs)) -- EX Hazard
-			ForwardA <= '10'
-		if (EX_RegWrite <> 0 and (EX_rd <> 0) and (EX_rd == ID_rt)) -- EX Hazard
-			ForwardB <= '10'
+		if (EX_RegWrite /= 0 and (EX_rd /= 0) and (EX_rd = ID_rs)) then -- EX Hazard
+			ForwardA <= '10';
+		if (EX_RegWrite /= 0 and (EX_rd /= 0) and (EX_rd = ID_rt)) then -- EX Hazard
+			ForwardB <= '10';
 
 		-- MEM Hazards
-		if (MEM_RegWrite and (MEM_rd <> 0) and (EX_rd <> ID_rs) and (MEM_rd == ID_rs))
-			ForwardA <= '01'
-		if (MEM_RegWrite and (MEM_rd <> 0) and (EX_rd <> ID_rt) and (MEM_rd == ID_rt))
-			ForwardB <= '01'
+		if (MEM_RegWrite and (MEM_rd /= 0) and (EX_rd /= ID_rs) and (MEM_rd = ID_rs)) then
+			ForwardA <= '01';
+		if (MEM_RegWrite and (MEM_rd /= 0) and (EX_rd /= ID_rt) and (MEM_rd = ID_rt)) then
+			ForwardB <= '01';
 		
 	end process;
 
