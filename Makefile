@@ -11,6 +11,7 @@ VCD = --vcd=mips.vcd
 STOP = --stop-time=100000ns
 
 SRC =	forward.vhd \
+	hazard.vhd \
 	predicao.vhd \
  	basic_types.vhd \
     	reg.vhd \
@@ -30,6 +31,7 @@ SRC =	forward.vhd \
     	mips_tb.vhd
 
 OBJ =	forward.o \
+	hazard.o \
 	predicao.o \
 	basic_types.o \
     	reg.o \

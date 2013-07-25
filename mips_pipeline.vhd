@@ -116,9 +116,9 @@ begin -- BEGIN MIPS_PIPELINE ARCHITECTURE
     ID_immed <= ID_instr(15 downto 0);
 
 
-    REG_FILE: entity work.reg_bank port map ( clk, reset, WB_RegWrite, ID_rs, ID_rt, WB_RegRd, ID_A, ID_B, WB_wd);
+    REG_FILE: entity work.reg_bank port map (clk, reset, WB_RegWrite, ID_rs, ID_rt, WB_RegRd, ID_A, ID_B, WB_wd);
 
--- HAZARD: entity hazard port map (clk, EX_rt, ID_rs, ID_rt, EX_MemRead, EX_MemWrite, Stall);
+    HAZARD_UNIT: entity work.hazard port map (clk, EX_rt, ID_rs, ID_rt, EX_MemRead, EX_MemWrite, Stall);
 
     -- sign-extender
     EXT: process(ID_immed)
