@@ -1,48 +1,54 @@
 v 3
-file . "mips_tb.vhd" "20110311173211.000" "20130715172928.185":
-  entity mips_tb at 1( 0) + 0 on 71;
-  architecture behav of mips_tb at 9( 97) + 0 on 72;
-file . "mem32.vhd" "20130718142030.000" "20130719000839.740":
-  entity mem32 at 1( 0) + 0 on 152;
-  architecture arq_mem32 of mem32 at 23( 458) + 0 on 153;
-file . "alu.vhd" "20130718142030.000" "20130719000839.646":
-  entity alu at 1( 0) + 0 on 148;
-  architecture alu_arq of alu at 15( 268) + 0 on 149;
-file . "control_pipeline.vhd" "20130718142030.000" "20130719000839.545":
-  entity control_pipeline at 1( 0) + 0 on 144;
-  architecture arq_control_pipeline of control_pipeline at 20( 413) + 0 on 145;
-file . "reg32_ce.vhd" "20130718142030.000" "20130719000839.458":
-  entity reg32_ce at 5( 262) + 0 on 140;
-  architecture arq_reg32_ce of reg32_ce at 20( 567) + 0 on 141;
-file . "mux4.vhd" "20130718142030.000" "20130719000839.350":
-  entity mux4 at 1( 0) + 0 on 136;
-  architecture arq_mux4 of mux4 at 17( 390) + 0 on 137;
-file . "mux2.vhd" "20130718142030.000" "20130719000839.273":
-  entity mux2 at 1( 0) + 0 on 132;
-  architecture arq_mux2 of mux2 at 17( 319) + 0 on 133;
-file . "reg.vhd" "20130718142030.000" "20130719000839.213":
-  entity reg at 5( 262) + 0 on 128;
-  architecture arq_reg of reg at 20( 553) + 0 on 129;
-file . "basic_types.vhd" "20130718142030.000" "20130719000839.193":
-  package p_mi0 at 4( 180) + 0 on 127;
-file . "add32.vhd" "20130718142030.000" "20130719000839.243":
-  entity add32 at 1( 0) + 0 on 130;
-  architecture add32_arq of add32 at 13( 202) + 0 on 131;
-file . "mux3.vhd" "20130718142030.000" "20130719000839.308":
-  entity mux3 at 1( 0) + 0 on 134;
-  architecture arq_mux3 of mux3 at 17( 387) + 0 on 135;
-file . "rom32.vhd" "20130718142030.000" "20130719000839.399":
-  entity rom32 at 1( 0) + 0 on 138;
-  architecture arq_rom32 of rom32 at 15( 182) + 0 on 139;
-file . "reg_bank.vhd" "20130718142030.000" "20130719000839.486":
-  entity reg_bank at 4( 224) + 0 on 142;
-  architecture reg_bank of reg_bank at 17( 536) + 0 on 143;
-file . "shift_left.vhd" "20130718142030.000" "20130719000839.615":
-  entity shift_left at 1( 0) + 0 on 146;
-  architecture arq_shift_left of shift_left at 19( 204) + 0 on 147;
-file . "alu_ctl.vhd" "20130718142030.000" "20130719000839.699":
-  entity alu_ctl at 1( 0) + 0 on 150;
-  architecture arq_alu_ctl of alu_ctl at 15( 276) + 0 on 151;
-file . "mips_pipeline.vhd" "20110311173211.000" "20130715172927.965":
-  entity mips_pipeline at 1( 0) + 0 on 69;
-  architecture arq_mips_pipeline of mips_pipeline at 15( 223) + 0 on 70;
+file . "predicao.vhd" "20130725174508.000" "20130725150313.389":
+  entity predicao at 3( 59) + 0 on 445;
+  architecture arq_predicao of predicao at 17( 267) + 0 on 446;
+file . "forward.vhd" "20130725175220.000" "20130725150313.342":
+  entity forward at 1( 0) + 0 on 443;
+  architecture arq_forward of forward at 18( 366) + 0 on 444;
+file . "mips_pipeline.vhd" "20130725180304.000" "20130725150314.178":
+  entity mips_pipeline at 1( 0) + 0 on 474;
+  architecture arq_mips_pipeline of mips_pipeline at 15( 223) + 0 on 475;
+file . "alu_ctl.vhd" "20130722040143.000" "20130725150314.038":
+  entity alu_ctl at 1( 0) + 0 on 470;
+  architecture arq_alu_ctl of alu_ctl at 15( 276) + 0 on 471;
+file . "shift_left.vhd" "20130718142030.000" "20130725150313.932":
+  entity shift_left at 1( 0) + 0 on 466;
+  architecture arq_shift_left of shift_left at 19( 204) + 0 on 467;
+file . "reg_bank.vhd" "20130718142030.000" "20130725150313.815":
+  entity reg_bank at 4( 224) + 0 on 462;
+  architecture reg_bank of reg_bank at 17( 536) + 0 on 463;
+file . "rom32.vhd" "20130718142030.000" "20130725150313.704":
+  entity rom32 at 1( 0) + 0 on 458;
+  architecture arq_rom32 of rom32 at 15( 182) + 0 on 459;
+file . "mux3.vhd" "20130718142030.000" "20130725150313.586":
+  entity mux3 at 1( 0) + 0 on 454;
+  architecture arq_mux3 of mux3 at 17( 387) + 0 on 455;
+file . "add32.vhd" "20130718142030.000" "20130725150313.501":
+  entity add32 at 1( 0) + 0 on 450;
+  architecture add32_arq of add32 at 13( 202) + 0 on 451;
+file . "basic_types.vhd" "20130718142030.000" "20130725150313.431":
+  package p_mi0 at 4( 180) + 0 on 447;
+file . "reg.vhd" "20130718142030.000" "20130725150313.463":
+  entity reg at 5( 262) + 0 on 448;
+  architecture arq_reg of reg at 20( 553) + 0 on 449;
+file . "mux2.vhd" "20130718142030.000" "20130725150313.545":
+  entity mux2 at 1( 0) + 0 on 452;
+  architecture arq_mux2 of mux2 at 17( 319) + 0 on 453;
+file . "mux4.vhd" "20130718142030.000" "20130725150313.642":
+  entity mux4 at 1( 0) + 0 on 456;
+  architecture arq_mux4 of mux4 at 17( 390) + 0 on 457;
+file . "reg32_ce.vhd" "20130718142030.000" "20130725150313.776":
+  entity reg32_ce at 5( 262) + 0 on 460;
+  architecture arq_reg32_ce of reg32_ce at 20( 567) + 0 on 461;
+file . "control_pipeline.vhd" "20130722035144.000" "20130725150313.871":
+  entity control_pipeline at 1( 0) + 0 on 464;
+  architecture arq_control_pipeline of control_pipeline at 20( 413) + 0 on 465;
+file . "alu.vhd" "20130718142030.000" "20130725150313.971":
+  entity alu at 1( 0) + 0 on 468;
+  architecture alu_arq of alu at 15( 268) + 0 on 469;
+file . "mem32.vhd" "20130718142030.000" "20130725150314.091":
+  entity mem32 at 1( 0) + 0 on 472;
+  architecture arq_mem32 of mem32 at 23( 458) + 0 on 473;
+file . "mips_tb.vhd" "20130718142030.000" "20130725150314.449":
+  entity mips_tb at 1( 0) + 0 on 476;
+  architecture behav of mips_tb at 9( 97) + 0 on 477;

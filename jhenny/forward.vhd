@@ -1,5 +1,6 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
+use work.p_MI0.all;
 
 -- Declaracao das entradas e saidas
 entity forward is
@@ -13,6 +14,7 @@ entity forward is
 		ForwardA, ForwardB: out std_logic_vector(1 downto 0)
 	);
 end forward;
+
 
 -- TODO: fazer essa parte!!!
 architecture arq_forward of forward is

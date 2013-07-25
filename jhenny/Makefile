@@ -10,16 +10,15 @@ VCD = --vcd=mips.vcd
 
 STOP = --stop-time=100000ns
 
-SRC =	basic_types.vhd \
-	reg.vhd \
+SRC = 	basic_types.vhd \
+    	reg.vhd \
     	add32.vhd \
-	hazard.vhd \	
-	forward.vhd \
-	predicao.vhd \ 
     	mux2.vhd \
 	mux3.vhd \
 	mux4.vhd \
     	rom32.vhd \
+	forward.vhd \
+	predicao.vhd \
     	reg32_ce.vhd \
     	reg_bank.vhd \
     	control_pipeline.vhd \
@@ -30,16 +29,15 @@ SRC =	basic_types.vhd \
     	mips_pipeline.vhd \
     	mips_tb.vhd
 
-OBJ =	basic_types.o \
-	reg.o \
+OBJ = 	basic_types.o \
+    	reg.o \
     	add32.o \
-	hazard.o \
-	forward.o \
-	predicao.o \    	
     	mux3.o \
 	mux4.o \
 	mux2.o \
     	rom32.o \
+	forward.o \
+	predicao.o \
     	reg32_ce.o \
     	reg_bank.o \
     	control_pipeline.o \

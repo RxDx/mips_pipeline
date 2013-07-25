@@ -44,13 +44,11 @@ architecture arq_mips_pipeline of mips_pipeline is
     signal EX_Zero: std_logic;
     signal EX_ALUOp: std_logic_vector(1 downto 0);
     signal EX_Operation: std_logic_vector(2 downto 0);
-    signal ForwardA: std_logic_vector(1 downto 0); -- declaracao
-    signal ForwardB: std_logic_vector(1 downto 0); -- declaracao
-    signal Stall: std_logic; -- declarado
+    signal ForwardA: std_logic_vector(1 downto 0); --adicionado
+    signal ForwardB: std_logic_vector(1 downto 0); --adicionado
+    signal Stall: std_logic; --adicionado
     signal EX_alua, EX_alub_IMM: reg32;
-    signal predicao: std_logic; -- declarado
-    signal saida: std_logic_vector(1 downto 0); -- declarado
-    signal tomado: std_logic;
+
     
 
    -- MEM Signals
@@ -68,6 +66,10 @@ architecture arq_mips_pipeline of mips_pipeline is
     signal WB_memout, WB_ALUOut: reg32;
     signal WB_wd: reg32;
     signal WB_RegRd: std_logic_vector(4 downto 0);
+
+
+
+ 
 
 
 --
@@ -118,7 +120,10 @@ begin -- BEGIN MIPS_PIPELINE ARCHITECTURE
 
     REG_FILE: entity work.reg_bank port map ( clk, reset, WB_RegWrite, ID_rs, ID_rt, WB_RegRd, ID_A, ID_B, WB_wd);
 
--- HAZARD: entity hazard port map (clk, EX_rt, ID_rs, ID_rt, EX_MemRead, EX_MemWrite, Stall);
+
+--   UNIDADE DE HAZARD -- adicionado por jsp10
+
+-- HAZARD: entity <nome do arquivo> port map (clk, EX_rt, ID_rs, ID_rt, EX_MemRead, EX_MemWrite, Stall);
 
     -- sign-extender
     EXT: process(ID_immed)
@@ -187,9 +192,14 @@ begin -- BEGIN MIPS_PIPELINE ARCHITECTURE
 
     BRANCH_ADD: entity work.add32 port map (EX_pc4, EX_offset, EX_btgt);
 
+--UNIDADE DE FORWARD TEM QUE SER ADICIONADA AQUI jsp10
+
+
+----
 
 -- dois mux foram adicionados (mux 3) com as portas dos fwd (um para A e outro para B)
 
+---
     ALU_MUX_A: entity work.mux3 port map (ForwardA, EX_A, WB_wd, MEM_ALUOut, EX_alua);
     
     ALU_MUX_B: entity work.mux3 port map (ForwardB, EX_B, WB_wd, MEM_ALUOut, EX_alub);	
@@ -199,14 +209,24 @@ begin -- BEGIN MIPS_PIPELINE ARCHITECTURE
     ALU_h: entity work.alu port map (EX_Operation, EX_A, EX_alub, EX_ALUOut, EX_Zero);
 
 
-    predicao <= EX_Branch and EX_Zero;
-    PREDICAO_UNIT: entity work.predicao port map (clk, tomado, reset, saida); -- Adicionado UNIDADE de PREDICAO de 2bits (predicao.vhd)
+-- predição de dois bits a ser adicionada aqui
+predict <= EX_Branch and EX_Zero;
+
+PREDICTION: entity work.predicao port map (clk, reset, predict, estadoIn, estadoOut, saida, EX_Branch);
+
+estadoIn <= estadoOut;
+
+----
+
+
+
 
     DEST_MUX2: entity work.mux2 generic map (5) port map (EX_RegDst, EX_rt, EX_rd, EX_RegRd);
 
     ALU_c: entity work.alu_ctl port map (EX_ALUOp, EX_funct, EX_Operation);
 
-    FORWARD_UNIT: entity work.forward port map (EX_rs, EX_rd, EX_rt, ID_rs, ID_rt, MEM_RegRd, EX_RegWrite, MEM_RegWrite, ForwardA, ForwardB); -- Adicionado UNIDADE de ADIANTAMENTO (forward.vhd)
+    FORWARD_UNIT: entity work.forward port map (EX_rs, EX_rd, EX
+_rt, ID_rs, ID_rt, MEM_RegRd, EX_RegWrite, MEM_RegWrite, ForwardA, ForwardB); -- Adicionado UNIDADE de ADIANTAMENTO (forward.vhd)
 
     EX_MEM_pip: process (clk)		    -- EX/MEM Pipeline Register
     begin

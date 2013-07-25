@@ -37,14 +37,20 @@ architecture arq_mips_pipeline of mips_pipeline is
 
     signal EX_pc4, EX_extend, EX_A, EX_B: reg32;
     signal EX_offset, EX_btgt, EX_alub, EX_ALUOut: reg32;
-    signal EX_rt, EX_rd: std_logic_vector(4 downto 0);
+    signal EX_rt, EX_rd, EX_rs: std_logic_vector(4 downto 0);
     signal EX_RegRd: std_logic_vector(4 downto 0);
     signal EX_funct: std_logic_vector(5 downto 0);
     signal EX_RegWrite, EX_Branch, EX_RegDst, EX_MemtoReg, EX_MemRead, EX_MemWrite, EX_ALUSrc: std_logic;  -- EX Control Signals
     signal EX_Zero: std_logic;
     signal EX_ALUOp: std_logic_vector(1 downto 0);
     signal EX_Operation: std_logic_vector(2 downto 0);
-
+    signal ForwardA: std_logic_vector(1 downto 0); -- declaracao
+    signal ForwardB: std_logic_vector(1 downto 0); -- declaracao
+    signal Stall: std_logic; -- declarado
+    signal EX_alua, EX_alub_IMM: reg32;
+    signal predicao: std_logic; -- declarado
+    signal saida: std_logic_vector(1 downto 0); -- declarado
+    signal tomado: std_logic;
     
 
    -- MEM Signals
@@ -62,6 +68,9 @@ architecture arq_mips_pipeline of mips_pipeline is
     signal WB_memout, WB_ALUOut: reg32;
     signal WB_wd: reg32;
     signal WB_RegRd: std_logic_vector(4 downto 0);
+
+
+--
 
 
 
@@ -109,6 +118,7 @@ begin -- BEGIN MIPS_PIPELINE ARCHITECTURE
 
     REG_FILE: entity work.reg_bank port map ( clk, reset, WB_RegWrite, ID_rs, ID_rt, WB_RegRd, ID_A, ID_B, WB_wd);
 
+-- HAZARD: entity hazard port map (clk, EX_rt, ID_rs, ID_rt, EX_MemRead, EX_MemWrite, Stall);
 
     -- sign-extender
     EXT: process(ID_immed)
@@ -143,6 +153,8 @@ begin -- BEGIN MIPS_PIPELINE ARCHITECTURE
 			EX_extend   <= (others => '0');
 			EX_rt       <= (others => '0');
 			EX_rd       <= (others => '0');
+			EX_rs       <= (others => '0');		
+
         	else 
             		EX_RegDst   <= ID_RegDst;
             		EX_ALUOp    <= ID_ALUOp;
@@ -159,6 +171,7 @@ begin -- BEGIN MIPS_PIPELINE ARCHITECTURE
             		EX_extend   <= ID_extend;
             		EX_rt       <= ID_rt;
             		EX_rd       <= ID_rd;
+			EX_rs	    <= ID_rs;
         	end if;
 	end if;
     end process;
@@ -174,15 +187,25 @@ begin -- BEGIN MIPS_PIPELINE ARCHITECTURE
 
     BRANCH_ADD: entity work.add32 port map (EX_pc4, EX_offset, EX_btgt);
 
-    ALU_MUX_A: entity work.mux2 port map (EX_ALUSrc, EX_B, EX_extend, EX_alub);
 
-    ALU_h: entity work.alu port map (EX_Operation, EX_A, EX_alub, EX_ALUOut, EX_Zero);
+-- dois mux foram adicionados (mux 3) com as portas dos fwd (um para A e outro para B)
+
+    ALU_MUX_A: entity work.mux3 port map (ForwardA, EX_A, WB_wd, MEM_ALUOut, EX_alua);
+    
+    ALU_MUX_B: entity work.mux3 port map (ForwardB, EX_B, WB_wd, MEM_ALUOut, EX_alub);	
+
+    ALU_MUX_IMM: entity work.mux2 port map (EX_ALUSrc, EX_B, EX_extend, EX_alub_IMM);
+
+    ALU_h: entity work.alu port map (EX_Operation, EX_alua, EX_alub_IMM, EX_ALUOut, EX_Zero); --EX_Zero compara o se instrucao foi BEQ e desvio foi tomado
+
+    predicao <= EX_Branch and EX_Zero;
+    PREDICAO_UNIT: entity work.predicao port map (clk, tomado, reset, saida); -- Adicionado UNIDADE de PREDICAO de 2bits (predicao.vhd)
 
     DEST_MUX2: entity work.mux2 generic map (5) port map (EX_RegDst, EX_rt, EX_rd, EX_RegRd);
 
     ALU_c: entity work.alu_ctl port map (EX_ALUOp, EX_funct, EX_Operation);
 
-    FORWARD_UNIT: entity work.forward port map (EX_RegWrite, EX_rs, EX_rd, EX_rt, ID_rs, ID_rt, MEM_rd, EX_RegWrite, MEM_RegWrite, ForwardA, ForwardB); -- Adicionado UNIDADE de ADIANTAMENTO (forward.vhd)
+    FORWARD_UNIT: entity work.forward port map (EX_rs, EX_rd, EX_rt, ID_rs, ID_rt, MEM_RegRd, EX_RegWrite, MEM_RegWrite, ForwardA, ForwardB); -- Adicionado UNIDADE de ADIANTAMENTO (forward.vhd)
 
     EX_MEM_pip: process (clk)		    -- EX/MEM Pipeline Register
     begin
